@@ -1,0 +1,25 @@
+// flex size in rem
+@function rem($pixels, $context: $font-size) {
+  @if (unitless($pixels)) {
+    $pixels: $pixels * 1px;
+  }
+
+  @if (unitless($context)) {
+    $context: $context * 1px;
+  }
+
+  @return $pixels / $context * 1rem;
+};
+
+// media queries
+@mixin mq($from, $to: 0) {
+  @if $to {
+    @media (max-width: $from) and (min-width: $to) {
+      @content
+    };
+  } @else {
+    @media (max-width: $from) {
+      @content
+    };
+  }
+};

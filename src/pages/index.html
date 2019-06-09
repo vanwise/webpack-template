@@ -1,0 +1,6 @@
+<% var data = { title: "Template" }; %>
+<%= _.template(require('html-loader!../includes/header.html'))(data) %>
+<main class="page-main">
+    <div class="container">Hello world</div>
+</main>
+<%= require('html-loader!../includes/footer.html') %>

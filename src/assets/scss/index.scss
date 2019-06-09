@@ -1,0 +1,14 @@
+/* common */
+@import "./common/variables";
+@import "./common/mixins";
+@import "./common/colors";
+@import "./common/reset";
+@import "./common/core";
+@import "./common/fonts";
+
+/* components */
+@import "./components/btn";
+
+/* blocks */
+@import "./blocks/header";
+@import "./blocks/footer";

@@ -1,0 +1,50 @@
+{
+  "name": "webpack-template",
+  "version": "1.0.0",
+  "description": "Template for new projects",
+  "main": "src/index.js",
+  "scripts": {
+    "dev": "webpack-dev-server --open --config webpack.dev.config.js",
+    "build": "webpack --config webpack.build.config.js"
+  },
+  "browserslist": [
+    "> 1%",
+    "last 3 version"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/vanwise/webpack-template.git"
+  },
+  "author": "Ivan Zhukov",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/vanwise/webpack-template/issues"
+  },
+  "homepage": "https://github.com/vanwise/webpack-template#readme",
+  "devDependencies": {
+    "@babel/core": "^7.4.5",
+    "@babel/preset-env": "^7.4.5",
+    "autoprefixer": "^9.6.0",
+    "babel-loader": "^8.0.6",
+    "copy-webpack-plugin": "^5.0.3",
+    "css-loader": "^2.1.1",
+    "css-mqpacker": "^7.0.0",
+    "cssnano": "^4.1.10",
+    "file-loader": "^4.0.0",
+    "html-webpack-plugin": "^3.2.0",
+    "mini-css-extract-plugin": "^0.7.0",
+    "node-sass": "^4.12.0",
+    "path": "^0.12.7",
+    "postcss-loader": "^3.0.0",
+    "sass-loader": "^7.1.0",
+    "style-loader": "^0.23.1",
+    "webpack": "^4.33.0",
+    "webpack-cli": "^3.3.3",
+    "webpack-dev-server": "^3.7.1",
+    "webpack-merge": "^4.2.1"
+  },
+  "dependencies": {
+    "jquery": "^3.4.1",
+    "normalize.css": "^8.0.1"
+  }
+}

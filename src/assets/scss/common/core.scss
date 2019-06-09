@@ -1,0 +1,73 @@
+html {
+  min-width: $mobile-width;
+  text-align: left;
+  font-family: $font-primary;
+  font-weight: 400;
+  font-size: $font-size;
+  line-height: 1.4;
+  color: var(--black);
+  background: #fff;
+}
+
+body {
+  position: relative;
+  overflow-x: hidden;
+  -webkit-overflow-scrolling: auto;
+}
+
+// style for hidden text
+.visually-hidden {
+  position: absolute !important;
+  margin: 0 !important;
+  padding: 0 !important;
+  width: 1px !important;
+  height: 1px !important;
+  white-space: nowrap !important;
+  clip-path: inset(100%) !important;
+  clip: rect(0 0 0 0) !important;
+  overflow: hidden !important;
+}
+
+// style for "br" element
+.main-br {
+  display: none;
+
+  @media (width: $mobile-width), (width: $desktop-width) {
+    display: block;
+  }
+}
+
+.desktop-br {
+  display: none;
+
+  @media (width: $desktop-width) {
+    display: block;
+  }
+}
+
+.mobile-br {
+  display: none;
+
+  @media (width: $mobile-width) {
+    display: block;
+  }
+}
+
+// content centering container
+.container {
+  margin: 0 auto;
+  max-width: $desktop-width;
+  // padding: 0 0;
+
+  // @include mq($desktop) {
+    
+  // }
+
+  // @include mq($laptop) {
+
+  // }
+
+  // @include mq($tablet) {
+
+  // }
+}
