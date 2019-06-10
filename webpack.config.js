@@ -2,32 +2,31 @@ const path = require('path');
 const CopyWebpackPlugin = require('copy-webpack-plugin');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
-const fs =require('fs');
+const fs = require('fs');
+const glob = require('glob');
 
 const PATHS = {
   src: path.join(__dirname, './src'),
   dist: path.join(__dirname, './dist'),
-  pages: 'pages'
+  html: 'pages'
 };
 
 function generateHtmlPlugins (folderPath) {
-  function getFilesPath (dirPath) {
-    return fs.readdirSync(dirPath).map(item => path.join(dirPath, item));
-  }
+  const htmlPaths = glob.sync(`${folderPath}/**/*.html`);
 
-  let pages = getFilesPath(folderPath);
+  return htmlPaths.map(item => {
+    const pathArr = item.split('/');
+    const srcPath = pathArr.join('\\');
+    const distPath = pathArr.slice(pathArr.indexOf(`${PATHS.html}`) + 1).join('/');
 
-  pages.map((item, i) => {
-    if (path.extname(item.split('\\').pop()) !== '.html') {
-      pages.splice(i, 1);
-      pages = pages.concat(getFilesPath(item));
-    }
+    return new HtmlWebpackPlugin({
+      template: srcPath,
+      filename: distPath
+    })
   });
-  console.log(pages)
-  //const pagesPath = pages.map(pages => pages.split('\\').filter((item, i, arr) => i > arr.indexOf(PATHS.pages)))
 };
 
-const htmlPlugins = generateHtmlPlugins(`${PATHS.src}/${PATHS.pages}`);
+const htmlPlugins = generateHtmlPlugins(`${PATHS.src}/${PATHS.html}`);
 
 module.exports = {
   externals: {
@@ -60,11 +59,8 @@ module.exports = {
         exclude: '/node_modules'
       },
       {
-        test: /\.(png|jpg|gif|svg|jpeg)$/,
-        loader: 'file-loader',
-        options: {
-          name: '[name].[ext]'
-        }
+        test: /\.(gif|png|jpe?g|svg)$/,
+        loader: 'file-loader?name=images/[name].[ext]',
       },
       {
         test: /\.scss$/,
@@ -109,13 +105,11 @@ module.exports = {
     ]
   },
   plugins: [
-    new MiniCssExtractPlugin({
-      filename: 'style.[hash].css'
-    }),
+    new MiniCssExtractPlugin({ filename: 'style.[hash].css' }),
     new CopyWebpackPlugin([
       {
-        from: `${PATHS.src}/assets/images`,
-        to: `${PATHS.dist}/images`
+        from: `${PATHS.src}/assets/fonts`,
+        to: `${PATHS.dist}/fonts`
       }
     ])
   ].concat(htmlPlugins)

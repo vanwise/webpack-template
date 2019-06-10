@@ -1,10 +1,14 @@
 // font
-$font-primary: 'sans-serif';
+$font-primary: 'Roboto';
 $font-size: 14px;
 
 // screen breakpoints
 $desktop-width: 1440px;
+$laptop-width: 1280px;
+$tablet-width: 768px;
 $mobile-width: 320px;
-$desktop: 1439px;
-$laptop: 1279px;
-$tablet: 767px;
+
+// screen breakpoints for media querie
+$desktop: setMaxWidth($desktop-width);
+$laptop: setMaxWidth($laptop-width);
+$tablet: setMaxWidth($tablet-width);

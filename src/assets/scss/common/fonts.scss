@@ -1,10 +1,11 @@
-// @font-face {
-//   font-family: 'Roboto';
-//   font-style: normal;
-//   font-weight: 400;
-//   src:
-//     local('Roboto Regular'),
-//     local('Roboto-Regular'),
-//     url('../fonts/Roboto/Roboto-Regular.woff') format('woff'),
-//     url('../fonts/Roboto/Roboto-Regular.woff2') format('woff2');
-// }
+@font-face {
+  font-family: 'Roboto';
+  font-style: normal;
+  font-weight: 400;
+  src:
+    local('Roboto Regular'),
+    local('Roboto-Regular'),
+    url('/fonts/Roboto/Roboto-Regular.ttf') format('ttf'),
+    url('/fonts/Roboto/Roboto-Regular.woff') format('woff'),
+    url('/fonts/Roboto/Roboto-Regular.woff2') format('woff2');
+}

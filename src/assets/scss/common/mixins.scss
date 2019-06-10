@@ -11,15 +11,19 @@
   @return $pixels / $context * 1rem;
 };
 
-// media queries
+// media querie
 @mixin mq($from, $to: 0) {
   @if $to {
-    @media (max-width: $from) and (min-width: $to) {
+    @media (max-width: $from - 1px) and (min-width: $to) {
       @content
     };
   } @else {
-    @media (max-width: $from) {
+    @media (max-width: $from - 1px) {
       @content
     };
   }
 };
+
+@function setMaxWidth($num) {
+  @return #{'max-width: ' $num - 1px};
+}
