@@ -110,6 +110,10 @@ module.exports = {
       {
         from: `${PATHS.src}/assets/fonts`,
         to: `${PATHS.dist}/fonts`
+      },
+      {
+        from: `${PATHS.src}/assets/images`,
+        to: `${PATHS.dist}/images`
       }
     ])
   ].concat(htmlPlugins)
