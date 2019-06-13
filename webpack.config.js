@@ -16,11 +16,10 @@ function generateHtmlPlugins (folderPath) {
 
   return htmlPaths.map(item => {
     const pathArr = item.split('/');
-    const srcPath = pathArr.join('\\');
     const distPath = pathArr.slice(pathArr.indexOf(`${PATHS.html}`) + 1).join('/');
 
     return new HtmlWebpackPlugin({
-      template: srcPath,
+      template: item,
       filename: distPath
     })
   });
