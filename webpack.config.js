@@ -1,14 +1,15 @@
+const webpack = require('webpack');
 const path = require('path');
 const CopyWebpackPlugin = require('copy-webpack-plugin');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
-const fs = require('fs');
 const glob = require('glob');
 
 const PATHS = {
-  src: path.join(__dirname, './src'),
-  dist: path.join(__dirname, './dist'),
-  html: 'pages'
+  src: './src',
+  dist: './dist',
+  scss: './src/assets/scss/index.scss',
+  html: '/html/pages'
 };
 
 function generateHtmlPlugins (folderPath) {
@@ -16,7 +17,7 @@ function generateHtmlPlugins (folderPath) {
 
   return htmlPaths.map(item => {
     const pathArr = item.split('/');
-    const distPath = pathArr.slice(pathArr.indexOf(`${PATHS.html}`) + 1).join('/');
+    const distPath = pathArr.slice(pathArr.indexOf('pages') + 1).join('/');
 
     return new HtmlWebpackPlugin({
       template: item,
@@ -31,24 +32,14 @@ module.exports = {
   externals: {
     paths: PATHS
   },
-  entry: {
-    app: PATHS.src
-  },
+  entry: [
+    PATHS.src,
+    PATHS.scss
+  ],
   output: {
-    filename: '[name].[hash].js',
-    path: PATHS.dist
-  },
-  optimization: {
-    splitChunks: {
-      cacheGroups: {
-        vendor: {
-          name: 'vendors',
-          test: /node_modules/,
-          chunks: 'all',
-          enforce: true
-        }
-      }
-    }
+    filename: 'bundle.[hash].js',
+    path: path.join(__dirname, PATHS.dist),
+    publicPath: './'
   },
   module: {
     rules: [
@@ -60,6 +51,10 @@ module.exports = {
       {
         test: /\.(gif|png|jpe?g|svg)$/,
         loader: 'file-loader?name=images/[name].[ext]',
+      },
+      {
+        test: /\.(eot|woff|woff2|svg|ttf)([\?]?.*)$/,
+        loader: 'url-loader'
       },
       {
         test: /\.scss$/,
@@ -104,15 +99,16 @@ module.exports = {
     ]
   },
   plugins: [
+    new webpack.ProvidePlugin({
+      $: "jquery/dist/jquery.min.js",
+      jQuery: "jquery/dist/jquery.min.js",
+      "window.jQuery": "jquery/dist/jquery.min.js"
+    }),
     new MiniCssExtractPlugin({ filename: 'style.[hash].css' }),
     new CopyWebpackPlugin([
       {
-        from: `${PATHS.src}/assets/fonts`,
-        to: `${PATHS.dist}/fonts`
-      },
-      {
         from: `${PATHS.src}/assets/images`,
-        to: `${PATHS.dist}/images`
+        to: `images`
       }
     ])
   ].concat(htmlPlugins)

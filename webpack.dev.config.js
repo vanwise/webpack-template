@@ -2,7 +2,7 @@ const webpack = require('webpack');
 const merge = require('webpack-merge');
 const baseWebpackConfig = require('./webpack.config.js');
 
-const devdWebpackConfig = merge(baseWebpackConfig, {
+const devWebpackConfig = merge(baseWebpackConfig, {
   mode: 'development',
   devtool: 'cheap-module-eval-source-map',
   devServer: {
@@ -17,4 +17,4 @@ const devdWebpackConfig = merge(baseWebpackConfig, {
   ]
 });
 
-module.exports = new Promise((resolve, reject) => resolve(devdWebpackConfig));
+module.exports = new Promise((resolve, reject) => resolve(devWebpackConfig));
