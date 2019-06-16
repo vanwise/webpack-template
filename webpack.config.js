@@ -3,13 +3,14 @@ const path = require('path');
 const CopyWebpackPlugin = require('copy-webpack-plugin');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
+const ImageminWebpWebpackPlugin= require("imagemin-webp-webpack-plugin");
 const glob = require('glob');
 
 const PATHS = {
   src: './src',
-  dist: './dist',
+  dist: '/dist',
   scss: './src/assets/scss/index.scss',
-  html: '/html/pages'
+  html: '/pages'
 };
 
 function generateHtmlPlugins (folderPath) {
@@ -18,7 +19,7 @@ function generateHtmlPlugins (folderPath) {
   return htmlPaths.map(item => {
     const pathArr = item.split('/');
     const distPath = pathArr.slice(pathArr.indexOf('pages') + 1).join('/');
-
+    
     return new HtmlWebpackPlugin({
       template: item,
       filename: distPath
@@ -26,7 +27,7 @@ function generateHtmlPlugins (folderPath) {
   });
 };
 
-const htmlPlugins = generateHtmlPlugins(`${PATHS.src}/${PATHS.html}`);
+const htmlPlugins = generateHtmlPlugins(`${PATHS.src}${PATHS.html}`);
 
 module.exports = {
   externals: {
@@ -37,29 +38,41 @@ module.exports = {
     PATHS.scss
   ],
   output: {
-    filename: 'bundle.[hash].js',
     path: path.join(__dirname, PATHS.dist),
-    publicPath: './'
+    filename: 'bundle.[hash].js'
+  },
+  optimization: {
+    splitChunks: {
+      chunks: 'all',
+      minChunks: 2
+    }
   },
   module: {
     rules: [
       {
         test: /\.js$/,
         loader: 'babel-loader',
-        exclude: '/node_modules'
+        exclude: '/node_modules/'
       },
       {
-        test: /\.(gif|png|jpe?g|svg)$/,
-        loader: 'file-loader?name=images/[name].[ext]',
+        test: /\.(gif|png|jpg|svg)$/,
+        loader: 'file-loader',
+        options: {
+          name: '[name].[ext]',
+          outputPath: 'images'
+        }
       },
       {
-        test: /\.(eot|woff|woff2|svg|ttf)([\?]?.*)$/,
-        loader: 'url-loader'
+        test: /\.(eot|woff|woff2|ttf)$/,
+        loader: 'file-loader',
+        options: {
+          name: '[name].[ext]',
+          outputPath: 'fonts'
+        }
       },
       {
-        test: /\.scss$/,
+        test: /\.(sa|sc|c)ss$/,
         use: [
-          'style-loader',
           MiniCssExtractPlugin.loader,
           {
             loader: 'css-loader',
@@ -77,38 +90,21 @@ module.exports = {
             options: { sourceMap: true }
           }
         ]
-      },
-      {
-        test: /\.css$/,
-        use: [
-          'style-loader',
-          MiniCssExtractPlugin.loader,
-          {
-            loader: 'css-loader',
-            options: { sourceMap: true }
-          },
-          {
-            loader: 'postcss-loader',
-            options: {
-              sourceMap: true,
-              config: { path: 'postcss.config.js' }
-            }
-          }
-        ]
       }
     ]
   },
   plugins: [
     new webpack.ProvidePlugin({
-      $: "jquery/dist/jquery.min.js",
-      jQuery: "jquery/dist/jquery.min.js",
-      "window.jQuery": "jquery/dist/jquery.min.js"
+      $: 'jquery/dist/jquery.min.js',
+      jQuery: 'jquery/dist/jquery.min.js',
+      'window.jQuery': 'jquery/dist/jquery.min.js'
     }),
     new MiniCssExtractPlugin({ filename: 'style.[hash].css' }),
+    new ImageminWebpWebpackPlugin(),
     new CopyWebpackPlugin([
       {
-        from: `${PATHS.src}/assets/images`,
-        to: `images`
+        from: `${PATHS.src}/static`,
+        to: ''
       }
     ])
   ].concat(htmlPlugins)

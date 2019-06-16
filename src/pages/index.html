@@ -1,0 +1,14 @@
+<% var data = { title: "Template" }; %>
+<%= _.template(require('html-loader!../includes/header.html'))(data) %>
+
+    <main class="main">
+      <div class="container">
+        Hello world
+        <picture>
+          <source type="image/webp" srcset="images/1.webp">
+          <img src="<%=require('../assets/images/1.jpg')%>" alt="">
+        </picture>
+      </div>
+    </main>
+
+<%= require('html-loader!../includes/footer.html') %>

@@ -6,7 +6,7 @@ const buildWebpackConfig = merge(baseWebpackConfig, {
   module: {
     rules: [
       {
-        test: /\.(gif|png|jpe?g|svg)$/i,
+        test: /\.(gif|png|jpe?g|svg)$/,
         use: [
           {
             loader: 'image-webpack-loader',
@@ -15,7 +15,6 @@ const buildWebpackConfig = merge(baseWebpackConfig, {
                 progressive: true,
                 quality: 65
               },
-              // optipng.enabled: false will disable optipng
               optipng: {
                 enabled: false,
               },
@@ -25,10 +24,6 @@ const buildWebpackConfig = merge(baseWebpackConfig, {
               },
               gifsicle: {
                 interlaced: false,
-              },
-              // the webp option will enable WEBP
-              webp: {
-                quality: 75
               }
             }
           }
