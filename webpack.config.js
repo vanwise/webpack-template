@@ -3,7 +3,7 @@ const path = require('path');
 const CopyWebpackPlugin = require('copy-webpack-plugin');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
-const ImageminWebpWebpackPlugin= require("imagemin-webp-webpack-plugin");
+const ImageminWebpWebpackPlugin= require('imagemin-webp-webpack-plugin');
 const glob = require('glob');
 
 const PATHS = {

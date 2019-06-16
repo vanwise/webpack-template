@@ -1,5 +1,6 @@
 const merge = require('webpack-merge');
 const baseWebpackConfig = require('./webpack.config.js');
+const { CleanWebpackPlugin } = require('clean-webpack-plugin');
 
 const buildWebpackConfig = merge(baseWebpackConfig, {
   mode: 'production',
@@ -30,7 +31,10 @@ const buildWebpackConfig = merge(baseWebpackConfig, {
         ]
       }
     ]
-  }
+  },
+  plugins: [
+    new CleanWebpackPlugin()
+  ]
 });
 
 module.exports = new Promise((resolve, reject) => resolve(buildWebpackConfig));
