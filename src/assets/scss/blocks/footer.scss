@@ -1,4 +1,6 @@
-.footer {
+$block: '.footer';
+
+#{$block} {
   &__inner {
     
   }

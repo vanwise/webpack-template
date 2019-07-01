@@ -3,7 +3,6 @@ const path = require('path');
 const CopyWebpackPlugin = require('copy-webpack-plugin');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
-const ImageminWebpWebpackPlugin= require('imagemin-webp-webpack-plugin');
 const glob = require('glob');
 
 const PATHS = {
@@ -22,7 +21,8 @@ function generateHtmlPlugins (folderPath) {
     
     return new HtmlWebpackPlugin({
       template: item,
-      filename: distPath
+      filename: distPath,
+      webpackMode: process.env.NODE_ENV
     })
   });
 };
@@ -100,7 +100,6 @@ module.exports = {
       'window.jQuery': 'jquery/dist/jquery.min.js'
     }),
     new MiniCssExtractPlugin({ filename: 'style.[hash].css' }),
-    new ImageminWebpWebpackPlugin(),
     new CopyWebpackPlugin([
       {
         from: `${PATHS.src}/static`,

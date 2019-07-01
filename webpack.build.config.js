@@ -1,9 +1,15 @@
+const webpack = require('webpack');
 const merge = require('webpack-merge');
-const baseWebpackConfig = require('./webpack.config.js');
 const { CleanWebpackPlugin } = require('clean-webpack-plugin');
+const ImageminWebpWebpackPlugin= require('imagemin-webp-webpack-plugin');
+const currentMode = 'production';
+
+process.env.NODE_ENV = currentMode;
+
+const baseWebpackConfig = require('./webpack.config.js');
 
 const buildWebpackConfig = merge(baseWebpackConfig, {
-  mode: 'production',
+  mode: currentMode,
   module: {
     rules: [
       {
@@ -33,7 +39,8 @@ const buildWebpackConfig = merge(baseWebpackConfig, {
     ]
   },
   plugins: [
-    new CleanWebpackPlugin()
+    new CleanWebpackPlugin(),
+    new ImageminWebpWebpackPlugin()
   ]
 });
 
