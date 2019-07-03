@@ -1,6 +1,13 @@
 <%
   var data = { title: "Template" };
   var isProductionMode = htmlWebpackPlugin.options.webpackMode  === 'production' ? true : false;
+  var setImage = function (className, imageSrc, altText) {
+    var lol = require('../assets/images/' + imageSrc);
+    var lol2 = require.main;
+    console.log(lol2)
+
+    return '<img class=' + className + ' src=' + lol + ' alt=' + altText + '>';
+  };
 %>
 <%= _.template(require('html-loader!../includes/header.html'))(data) %>
 
@@ -11,6 +18,7 @@
           <% if (isProductionMode) { %><source type="image/webp" srcset="images/1.webp"><% } %>
           <img src="<%=require('../assets/images/1.jpg')%>" alt="">
         </picture>
+        <%= setImage('lol', '1.jpg', 'lol2') %>
       </div>
     </main>
 
