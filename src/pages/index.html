@@ -1,12 +1,31 @@
 <%
-  var data = { title: "Template" };
-  var isProductionMode = htmlWebpackPlugin.options.webpackMode  === 'production' ? true : false;
-  var setImage = function (className, imageSrc, altText) {
-    var lol = require('../assets/images/' + imageSrc);
-    var lol2 = require.main;
-    console.log(lol2)
-
-    return '<img class=' + className + ' src=' + lol + ' alt=' + altText + '>';
+  var data = { title: 'Template' };
+  const setImage = (className, imageSrc, altText=imageSrc.split('.')[0]) => {
+    const filename = `images/${imageSrc.split('.')[0]}`;
+    const isCreateWebp = 
+      htmlWebpackPlugin.options.webpackMode  === 'production' ?
+      `<source
+            type="image/webp"
+            srcset="
+              ${filename}.webp 1x,
+              ${filename}@2x.webp 2x,
+              ${filename}@3x.webp 3x">` :
+      '';
+    const getPath = src => {
+      return require('../assets/images/' + src);
+    }
+  
+    return (
+    `<picture class="${className}">
+          ${isCreateWebp}
+          <img
+            src="${getPath(imageSrc)}"
+            alt="${altText}"
+            srcset="
+              ${getPath(imageSrc.replace('.', '@2x.'))} 2x,
+              ${getPath(imageSrc.replace('.', '@3x.'))} 3x">
+        </picture>`
+    );
   };
 %>
 <%= _.template(require('html-loader!../includes/header.html'))(data) %>
@@ -14,11 +33,7 @@
     <main class="main">
       <div class="container">
         Hello world
-        <picture>
-          <% if (isProductionMode) { %><source type="image/webp" srcset="images/1.webp"><% } %>
-          <img src="<%=require('../assets/images/1.jpg')%>" alt="">
-        </picture>
-        <%= setImage('lol', '1.jpg', 'lol2') %>
+        <%= setImage('main__img-wrapper', '1.jpg', 'Зеленые горы') %>
       </div>
     </main>
 
