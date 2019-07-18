@@ -24,6 +24,18 @@
   }
 };
 
+@mixin setImage($url, $ext) {
+  background-image: url('#{$url}#{$ext}');
+
+  @media (min-resolution: 2dppx) {
+    background-image: url('#{$url}@2x#{$ext}');
+  }
+
+  @media (min-resolution: 3dppx) {
+    background-image: url('#{$url}@3x#{$ext}');
+  }
+}
+
 @function setMaxWidth($num) {
   @return #{'max-width: ' $num - 1px};
 }

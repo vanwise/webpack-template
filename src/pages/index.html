@@ -1,5 +1,8 @@
 <%
-  var data = { title: 'Template' };
+  var data = {
+    title: 'Template',
+    desc: 'Template for new projects'
+  };
   const setImage = (className, imageSrc, altText=imageSrc.split('.')[0]) => {
     const filename = `images/${imageSrc.split('.')[0]}`;
     const isCreateWebp = 
@@ -31,10 +34,15 @@
 <%= _.template(require('html-loader!../includes/header.html'))(data) %>
 
     <main class="main">
-      <div class="container">
-        Hello world
-        <%= setImage('main__img-wrapper', '1.jpg', 'Зеленые горы') %>
-      </div>
+      <section class="first-screen">
+        <div class="container">
+          <div class="first-screen__inner">
+            <h1 class="first-screen__title">Webpack template</h1>
+
+            <%= setImage('main__img-wrapper', '1.jpg', 'Зеленые горы') %>
+          </div>
+        </div>
+      </section>
     </main>
 
 <%= require('html-loader!../includes/footer.html') %>
