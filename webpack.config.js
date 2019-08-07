@@ -5,9 +5,30 @@ const HtmlWebpackPlugin = require('html-webpack-plugin');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const glob = require('glob');
 
+function generateEntryPoints () {
+  let arrayPath = glob.sync(`./src/layouts/**/*.js`);
+  let paths = {};
+
+  arrayPath.unshift(`./src/common`);
+  arrayPath = arrayPath.map(entryPath => {
+    const pathArray = entryPath.split('/');
+    const entryName = pathArray[pathArray.length - 1].split('.')[0];
+
+    return { [entryName]: entryPath };
+  });
+  arrayPath.forEach(obj => {
+    const objKey = Object.keys(obj)[0];
+
+    paths[objKey] = obj[objKey];
+  });
+  
+  return paths;
+}
+
 const PATHS = {
   src: './src',
   dist: '/dist',
+  entryPoints: generateEntryPoints(),
   scss: './src/assets/scss/index.scss',
   html: '/pages'
 };
@@ -17,12 +38,16 @@ function generateHtmlPlugins (folderPath) {
 
   return htmlPaths.map(item => {
     const pathArr = item.split('/');
-    const distPath = pathArr.slice(pathArr.indexOf('pages') + 1).join('/');
+    const distPathArray = pathArr.slice(pathArr.indexOf('pages') + 1);
+    const distPath = distPathArray.join('/');
+    const chunk = distPathArray.length > 1 ?
+      distPathArray[distPathArray.length - 2] : 'home';
     
     return new HtmlWebpackPlugin({
       template: item,
       filename: distPath,
-      webpackMode: process.env.NODE_ENV
+      webpackMode: process.env.NODE_ENV,
+      chunks: ['common', chunk]
     })
   });
 };
@@ -33,19 +58,10 @@ module.exports = {
   externals: {
     paths: PATHS
   },
-  entry: [
-    PATHS.src,
-    PATHS.scss
-  ],
+  entry: PATHS.entryPoints,
   output: {
     path: path.join(__dirname, PATHS.dist),
-    filename: 'bundle.[hash].js'
-  },
-  optimization: {
-    splitChunks: {
-      chunks: 'all',
-      minChunks: 2
-    }
+    filename: '[name].[hash].js'
   },
   module: {
     rules: [
@@ -58,8 +74,8 @@ module.exports = {
         test: /\.(gif|png|jpg|svg)$/,
         loader: 'file-loader',
         options: {
-          name: '[name].[ext]',
-          outputPath: 'images'
+          name: 'images/[name].[ext]',
+          publicPath: '/'
         }
       },
       {
@@ -99,7 +115,7 @@ module.exports = {
       jQuery: 'jquery/dist/jquery.min.js',
       'window.jQuery': 'jquery/dist/jquery.min.js'
     }),
-    new MiniCssExtractPlugin({ filename: 'style.[hash].css' }),
+    new MiniCssExtractPlugin({ filename: '[name].[hash].css' }),
     new CopyWebpackPlugin([
       {
         from: `${PATHS.src}/static`,

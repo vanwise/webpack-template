@@ -1,44 +1,22 @@
 <%
-  var data = {
+  var headerData = {
     title: 'Template',
     desc: 'Template for new projects'
   };
   const setImage = (className, imageSrc, altText=imageSrc.split('.')[0]) => {
-    const filename = `images/${imageSrc.split('.')[0]}`;
-    const isCreateWebp = 
-      htmlWebpackPlugin.options.webpackMode  === 'production' ?
-      `<source
-            type="image/webp"
-            srcset="
-              ${filename}.webp 1x,
-              ${filename}@2x.webp 2x,
-              ${filename}@3x.webp 3x">` :
-      '';
-    const getPath = src => {
-      return require('../assets/images/' + src);
-    }
-  
-    return (
-    `<picture class="${className}">
-          ${isCreateWebp}
-          <img
-            src="${getPath(imageSrc)}"
-            alt="${altText}"
-            srcset="
-              ${getPath(imageSrc.replace('.', '@2x.'))} 2x,
-              ${getPath(imageSrc.replace('.', '@3x.'))} 3x">
-        </picture>`
-    );
+    const filename = `/images/${imageSrc.split('.')[0]}`;
+    const isCreateWebp = htmlWebpackPlugin.options.webpackMode  === 'production' ? `<source type="image/webp" srcset=" ${filename}.webp 1x, ${filename}@2x.webp 2x, ${filename}@3x.webp 3x">` : '';
+    const getPath = src => require('../assets/images/' + src);
+    return (`<picture class="${className}">${isCreateWebp}<img src="${getPath(imageSrc)}" alt="${altText}" srcset="${getPath(imageSrc.replace('.', '@2x.'))} 2x, ${getPath(imageSrc.replace('.', '@3x.'))} 3x"></picture>`);
   };
 %>
-<%= _.template(require('html-loader!../includes/header.html'))(data) %>
+<%= _.template(require('html-loader!../includes/header.html'))(headerData) %>
 
     <main class="main">
       <section class="first-screen">
         <div class="container">
           <div class="first-screen__inner">
             <h1 class="first-screen__title">Webpack template</h1>
-
             <%= setImage('main__img-wrapper', '1.jpg', 'Зеленые горы') %>
           </div>
         </div>

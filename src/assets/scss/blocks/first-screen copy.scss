@@ -1,0 +1,16 @@
+$block: '.first-screen';
+
+#{$block} {
+  &__inner {
+    height: 100vh;
+    background: #0f0c4f;
+  }
+  
+  &__title {
+    text-align: center;
+    font-size: 58px;
+    line-height: 62px;
+    color: #fff;
+    background: #d7f5f3;
+  }
+}
