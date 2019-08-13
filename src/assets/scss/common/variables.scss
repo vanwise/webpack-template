@@ -1,15 +1,12 @@
 // font
 $font-primary: 'Roboto';
+$font-weight: 400;
 $font-size: 14px;
 $font-color: var(--black);
 
 // screen breakpoints
-$desktop-width: 1440px;
-$laptop-width: 1280px;
-$tablet-width: 768px;
-$mobile-width: 320px;
-
-// screen breakpoints for media querie
-$desktop: setMaxWidth($desktop-width);
-$laptop: setMaxWidth($laptop-width);
-$tablet: setMaxWidth($tablet-width);
+$desktop: 1440px;
+$desktop-low: 1280px;
+$laptop: 1024px;
+$tablet: 768px;
+$mobile: 320px;

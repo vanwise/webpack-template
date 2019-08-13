@@ -39,11 +39,7 @@
 @mixin setGridRows ($value, $media-value: $value) {
   grid-template-rows: $value;
 
-  @media (min-width: #{$desktop-width + 1px}) {
+  @media (min-width: #{$desktop + 1px}) {
     grid-template-rows: $media-value;
   }
-}
-
-@function setMaxWidth($num) {
-  @return #{'max-width: ' $num - 1px};
 }

@@ -40,9 +40,25 @@ function generateHtmlPlugins (folderPath) {
     const pathArr = item.split('/');
     const distPathArray = pathArr.slice(pathArr.indexOf('pages') + 1);
     const distPath = distPathArray.join('/');
-    const chunk = distPathArray.length > 1 ?
-      distPathArray[distPathArray.length - 2] : 'home';
+    let chunk;
     
+    
+    if (distPathArray.length > 1) {
+      const folder = distPathArray[distPathArray.length - 2];
+      
+      if (folder === 'ru') {
+        if (distPathArray.length === 2) {
+          chunk = 'home';
+        } else {
+          chunk = distPathArray[distPathArray.length - 3];
+        }
+      } else {
+        chunk = folder;
+      }
+    } else {
+      chunk = 'home';
+    }
+
     return new HtmlWebpackPlugin({
       template: item,
       filename: distPath,

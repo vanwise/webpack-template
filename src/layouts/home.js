@@ -1,5 +1,5 @@
 // css
-import '../assets/scss/blocks/first-screen.scss';
+import './home.scss';
 
 // js
 import '../assets/js/console';
