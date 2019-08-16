@@ -1,0 +1,8 @@
+// css  breakpoint variable for js
+:root {
+  --desktop: #{$desktop};
+  --desktop-low: #{$desktop-low};
+  --laptop: #{$laptop};
+  --tablet: #{$tablet};
+  --mobile: #{$mobile};
+}

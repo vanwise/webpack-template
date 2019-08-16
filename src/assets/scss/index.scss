@@ -2,6 +2,7 @@
 @import "common/fonts";
 @import "common/mixins";
 @import "common/variables";
+@import "common/css-variables";
 @import "common/colors";
 @import "common/reset";
 @import "common/core";
@@ -9,3 +10,5 @@
 /* components */
 @import "components/header";
 @import "components/footer";
+
+/* blocks */
