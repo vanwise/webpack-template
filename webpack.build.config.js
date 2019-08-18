@@ -1,10 +1,11 @@
-const webpack = require('webpack');
 const merge = require('webpack-merge');
-const { CleanWebpackPlugin } = require('clean-webpack-plugin');
 const ImageminWebpWebpackPlugin= require('imagemin-webp-webpack-plugin');
 const currentMode = 'production';
+const rimraf = require('rimraf');
 
 process.env.NODE_ENV = currentMode;
+
+rimraf.sync('./dist');
 
 const baseWebpackConfig = require('./webpack.config.js');
 
@@ -39,7 +40,6 @@ const buildWebpackConfig = merge(baseWebpackConfig, {
     ]
   },
   plugins: [
-    new CleanWebpackPlugin(),
     new ImageminWebpWebpackPlugin()
   ]
 });

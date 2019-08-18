@@ -1,5 +1,5 @@
 html {
-  min-width: $mobile-width;
+  min-width: $mobile;
   text-align: left;
   font-family: $font-primary;
   font-weight: $font-weight;
@@ -32,7 +32,7 @@ body {
 .main-br {
   display: none;
 
-  @media (width: $mobile-width), (width: $desktop) {
+  @media (width: $mobile), (width: $desktop) {
     display: block;
   }
 }
@@ -48,7 +48,7 @@ body {
 .mobile-br {
   display: none;
 
-  @media (width: $mobile-width) {
+  @media (width: $mobile) {
     display: block;
   }
 }
