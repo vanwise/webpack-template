@@ -88,7 +88,7 @@ module.exports = {
     rules: [
       {
         test: /\.js$/,
-        include: __dirname + '/src',
+        include: path.resolve(__dirname, 'src'),
         loader: 'babel-loader',
         query: {
           cacheDirectory: true
@@ -96,7 +96,7 @@ module.exports = {
       },
       {
         test: /\.(gif|png|jpg|svg)$/,
-        include: __dirname + '/src/assets/images',
+        include: path.resolve(__dirname, '/src/assets/images'),
         loader: 'file-loader',
         options: {
           name: 'images/[name].[ext]',
@@ -105,7 +105,7 @@ module.exports = {
       },
       {
         test: /\.(eot|woff|woff2|ttf)$/,
-        include: __dirname + '/src/assets/fonts',
+        include: path.resolve(__dirname, 'src/assets/fonts'),
         loader: 'file-loader',
         options: {
           name: '[name].[ext]',
@@ -115,9 +115,9 @@ module.exports = {
       {
         test: /\.(sa|sc|c)ss$/,
         include: [
-          __dirname + '/node_modules/normalize.css/normalize.css',
-          __dirname + '/node_modules/aos/dist/aos.css',
-          __dirname + '/src'
+          path.resolve(__dirname, 'node_modules/normalize.css/normalize.css'),
+          path.resolve(__dirname, 'node_modules/aos/dist/aos.css'),
+          path.resolve(__dirname, 'src')
         ],
         use: [
           MiniCssExtractPlugin.loader,
