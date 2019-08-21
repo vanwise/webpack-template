@@ -79,18 +79,24 @@ module.exports = {
     path: path.join(__dirname, PATHS.dist),
     filename: '[name].[hash].js'
   },
+  resolve: {
+    alias: {
+      setImage: path.resolve(__dirname, 'src/helpers/set-image'),
+    }
+  },
   module: {
     rules: [
       {
         test: /\.js$/,
+        include: __dirname + '/src',
         loader: 'babel-loader',
-        exclude: '/node_modules/',
         query: {
           cacheDirectory: true
         }
       },
       {
         test: /\.(gif|png|jpg|svg)$/,
+        include: __dirname + '/src/assets/images',
         loader: 'file-loader',
         options: {
           name: 'images/[name].[ext]',
@@ -99,6 +105,7 @@ module.exports = {
       },
       {
         test: /\.(eot|woff|woff2|ttf)$/,
+        include: __dirname + '/src/assets/fonts',
         loader: 'file-loader',
         options: {
           name: '[name].[ext]',
@@ -107,6 +114,11 @@ module.exports = {
       },
       {
         test: /\.(sa|sc|c)ss$/,
+        include: [
+          __dirname + '/node_modules/normalize.css/normalize.css',
+          __dirname + '/node_modules/aos/dist/aos.css',
+          __dirname + '/src'
+        ],
         use: [
           MiniCssExtractPlugin.loader,
           {
@@ -139,6 +151,10 @@ module.exports = {
       {
         from: `${PATHS.src}/static`,
         to: ''
+      },
+      {
+        from: `${PATHS.src}/assets/images`,
+        to: './images/'
       }
     ])
   ].concat(htmlPlugins)

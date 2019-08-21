@@ -1,18 +1,8 @@
 <%
+  const {setImage} = require('setImage');
   var headerData = {
     title: 'Template',
     desc: 'Template for new project'
-  };
-  const setImage = (className, imageSrc, altText=imageSrc.split('.')[0], isSet=true) => {
-    const filename = `/images/${imageSrc.split('.')[0]}`;
-    const isCreateWebp = htmlWebpackPlugin.options.webpackMode  !== 'production' ? '' :
-      isSet ? `<source type="image/webp" srcset=" ${filename}.webp 1x, ${filename}@2x.webp 2x, ${filename}@3x.webp 3x">` :
-      `<source type="image/webp" srcset=" ${filename}.webp 1x">`;
-    const getPath = src => require('../assets/images/' + src);
-    return imageSrc.split('.')[1] === 'svg' ?
-      `<img class="${className}" src="${getPath(imageSrc)}" alt="${altText}">` :
-      isSet ? `<picture class="${className}">${isCreateWebp}<img src="${getPath(imageSrc)}" alt="${altText}" srcset="${getPath(imageSrc.replace('.', '@2x.'))} 2x, ${getPath(imageSrc.replace('.', '@3x.'))} 3x"></picture>` :
-      `<picture class="${className}">${isCreateWebp}<img src="${getPath(imageSrc)}" alt="${altText}"></picture>`;
   };
 %>
 <%= _.template(require('html-loader!../includes/header.html'))(headerData) %>
@@ -22,10 +12,10 @@
         <div class="container">
           <div class="first-screen__inner">
             <h1 class="first-screen__title">Webpack template</h1>
-            <%= setImage('main__img-wrapper', '1.jpg', 'Зеленые горы') %>
+            <%= setImage('main__img', '1.jpg', 'Зеленые горы') %>
           </div>
         </div>
       </section>
     </main>
 
-<%= require('html-loader!../includes/footer.html') %>
+  <%= _.template(require('html-loader!../includes/footer.html'))() %>
